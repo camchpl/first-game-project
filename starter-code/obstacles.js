@@ -11,4 +11,6 @@ class Obstacle {
     }
 }
 
-// ctx.drawImage(this.img, this.x, this.y)
+
+
+// Borders/limits for the basket
