@@ -10,7 +10,3 @@ class Obstacle {
         this.speed = speed;
     }
 }
-
-
-
-// Borders/limits for the basket

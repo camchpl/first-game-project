@@ -1,6 +1,7 @@
 // Canvas setup
 window.onload = function() {
   var canvas = document.getElementById("game-board");
+  var myAudio = document.createElement("audio");
   var ctx = canvas.getContext("2d");
 
   // Declarations
@@ -13,19 +14,23 @@ window.onload = function() {
     "images/orange.png",
     "images/fruit1.png"
   ];
-  var burger = ["images/burger.png"]
   var frame = 0;
-  var score = 0;
+  var burger = ["images/burger.png"]
 
   // Sounds
-  //var soundStart;
-  //var soundGameOver;
+  var mySound;
+
+  function playMusic() {
+    music.play();
+  }
 
   // Function Start Game
   function startGame() {
+    mySound = new Sound("./sounds/bon.mp3");
     img.src = "./images/panier.png";
     img.onload = function() {
       ctx.drawImage(img, positionXpanier, 410, 100, 100);
+      mySound.play();
     };
   }
   // Start Button
@@ -35,15 +40,6 @@ window.onload = function() {
   };
 
   // Borders canvas
-  function moveLeft() {
-    if (positionXpanier > 100) {
-      positionXpanier -= 5;
-    }
-  }
-
-  function moveRight() {
-    if (positionXpanier < 150) positionXpanier += 5;
-  }
 
   // Right and left
   document.onkeydown = function(event) {
@@ -71,6 +67,10 @@ window.onload = function() {
 
     ctx.clearRect(0, 0, 550, 500);
     ctx.drawImage(img, positionXpanier, 410, 100, 100);
+    // Score
+    ctx.font = "30px 400 'icon' sans-serif;";
+    ctx.fillText("Your Score :", 435, 30);
+
     for (var i = 0; i < obstacles.length; i++) {
       ctx.drawImage(obstacles[i].img, obstacles[i].x, obstacles[i].y);
       if (
@@ -81,11 +81,18 @@ window.onload = function() {
       ) {
         obstacles.splice(i, 1);
       }
+      if (
+        intersect(
+          { x: obstacles[i].x, y: obstacles[i].y, width: 50, height: 50 },
+          { x: 0 }
+        )
+      ) {
+        alert("Game over");
+      }
     }
     window.requestAnimationFrame(updateCanvas);
 
-        // Function Print Score
-  
+    // Function Print Score
 
     // Intersect basket-obstacles
     function intersect(positionXpanier, obstacles) {
@@ -107,6 +114,11 @@ window.onload = function() {
 
     // Function Write Score
 
+    //Hearts for score
+    var starsArray = [];
+    var heart = new Image();
+    heart.src = "./images/health.png";
+
     // Function Game Over
     //function gameOver(){
     //  var score = 3 lives;
@@ -119,6 +131,6 @@ window.onload = function() {
 
     // Function Write Score
 
-
+    
   }
 };

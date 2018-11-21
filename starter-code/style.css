@@ -4,7 +4,8 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
+  background-color: #99bffc;
+  
 }
 
 body {
@@ -41,14 +42,3 @@ h3 {
   font-size: 10px;
   font-family: 'Dosis', sans-serif;
 }
-
-#score-container {
-  height: 25px;
-  position: relative;
-  float: right;
-  padding: 15px 25px;
-  font-size: 10px;
-  font-family: 'Dosis', sans-serif;
-  border-radius: 3px;
-  color: white;
-  margin-top: 8px;
