@@ -1,11 +1,15 @@
 // Canvas setup
 window.onload = function() {
+  console.log("hey");
   var canvas = document.getElementById("game-board");
   var myAudio = document.createElement("audio");
   var ctx = canvas.getContext("2d");
+  var gameStarted = false;
+  var lives = 3;
 
   // Declarations
   var positionXpanier = 220;
+
   var img = new Image();
   var obstacles = [];
   var images = [
@@ -15,45 +19,74 @@ window.onload = function() {
     "images/fruit1.png"
   ];
   var frame = 0;
-  var burger = ["images/burger.png"]
 
   // Sounds
   var mySound;
 
-  function playMusic() {
-    music.play();
-  }
+  // First image, before starting
+  var startImage = new Image();
+  startImage.src = "./images/fruits.jpg";
+  startImage.onload = function() {
+    ctx.drawImage(startImage, 0, 0, 500, 550);
+  };
 
+  var space;
   // Function Start Game
   function startGame() {
-    mySound = new Sound("./sounds/bon.mp3");
+    mySound = new Sound("./sounds/bong.mp3");
     img.src = "./images/panier.png";
     img.onload = function() {
       ctx.drawImage(img, positionXpanier, 410, 100, 100);
       mySound.play();
     };
+    for (let i = 0; i < lives; i++) {
+      hearts.push(heart);
+    }
+    updateCanvas();
   }
   // Start Button
   document.getElementById("button").onclick = function() {
-    startGame();
-    updateCanvas();
+    if (!gameStarted) {
+      startGame();
+      gameStarted = true;
+    }
   };
-
-  // Borders canvas
 
   // Right and left
   document.onkeydown = function(event) {
     var key = event.keyCode;
     if (key === 37) {
-      positionXpanier -= 10;
+      if (positionXpanier <= 0) {
+        positionXpanier = 0;
+      } else {
+        positionXpanier -= 15;
+      }
     } else if (key === 39) {
-      positionXpanier += 10;
+      if (positionXpanier >= 450) {
+        positionXpanier = 450;
+      } else {
+        positionXpanier += 15;
+      }
     }
   };
+
+  var heart = new Image();
+  heart.src = "./images/health.png";
+  var hearts = [];
+  function drawLives() {
+    space = 0;
+    for (let i = 0; i < lives; i++) {
+      ctx.drawImage(heart, 10 + space, 10, 24, 24);
+      space += 34;
+    }
+  }
+
+var gameOver = false;
 
   // Function Random Obstacles
   function updateCanvas() {
     frame++;
+    ctx.clearRect(0, 0, 550, 500);
     for (var i = 0; i < obstacles.length; i++) {
       obstacles[i].y += 1; // rapidity
     }
@@ -65,11 +98,13 @@ window.onload = function() {
       );
     }
 
-    ctx.clearRect(0, 0, 550, 500);
+    drawLives();
+
     ctx.drawImage(img, positionXpanier, 410, 100, 100);
-    // Score
-    ctx.font = "30px 400 'icon' sans-serif;";
-    ctx.fillText("Your Score :", 435, 30);
+
+    // Your score
+    ctx.font = "18px sans-serif";
+    ctx.fillText("Your Score :", 415, 30);
 
     for (var i = 0; i < obstacles.length; i++) {
       ctx.drawImage(obstacles[i].img, obstacles[i].x, obstacles[i].y);
@@ -84,15 +119,23 @@ window.onload = function() {
       if (
         intersect(
           { x: obstacles[i].x, y: obstacles[i].y, width: 50, height: 50 },
-          { x: 0 }
+          { y: 500 }
         )
       ) {
-        alert("Game over");
+        obstacles.splice(i, 1);
+        lives--;
       }
     }
-    window.requestAnimationFrame(updateCanvas);
-
-    // Function Print Score
+    if (lives === 0) {
+        gameOver = true;
+      var endImage = new Image();
+      endImage.src = "./images/fruits.jpg";
+      endImage.onload = function() {
+        ctx.drawImage(endImage, 0, 0, 500, 550);
+        scream = new Sound("./sounds/end.mp3");
+          scream.play();
+      };
+    }
 
     // Intersect basket-obstacles
     function intersect(positionXpanier, obstacles) {
@@ -112,25 +155,6 @@ window.onload = function() {
       );
     }
 
-    // Function Write Score
-
-    //Hearts for score
-    var starsArray = [];
-    var heart = new Image();
-    heart.src = "./images/health.png";
-
-    // Function Game Over
-    //function gameOver(){
-    //  var score = 3 lives;
-    // pause();
-    // alert("Game Over. Your score was "+ score);
-    // ctx.clearRect(0,0, canvas.width, canvas.height);
-    // }
-
-    // Function Start Again
-
-    // Function Write Score
-
-    
+    if(!gameOver) requestAnimationFrame(updateCanvas);
   }
 };
