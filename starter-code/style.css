@@ -1,16 +1,17 @@
 #game-board {
   cursor: url("./images/knife.png"), auto;
-  border: 2px solid #dfdec3;
+  border: 3px solid #eeeddd;
   display: block;
   margin-left: auto;
   margin-right: auto;
   background-color: #99bffc;
-  
+  font-family: 'Dosis', sans-serif;
 }
 
 body {
   background-image: url("./images/lemon.jpg");
   cursor: url("./images/knife.png"), auto;
+  
 }
 
 #button {
@@ -21,7 +22,7 @@ body {
   font-family: 'Dosis', sans-serif;
   font: bold;
   color: black;
-  margin: 20px 0 0 600px;
+  margin: 20px 0 0 610px;
   background-image: radial-gradient(circle, #ffe6b3, #ffffcc, #f2f0bd, #ebebe0);
   border: 2px solid #dfdec3;
   border-radius: 6px;

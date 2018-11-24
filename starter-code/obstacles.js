@@ -11,10 +11,10 @@ class Obstacle {
     }
 }
 
-class Burger {
+class Cloud {
     constructor (image, x, y, width, height, speed) {
-        this.img = new Image(); 
-        this.img.src = burger;
+        this.cloud = new Image(); 
+        this.cloud.src = image;
         this.x = x;
         this.y = y;
         this.width = width;
