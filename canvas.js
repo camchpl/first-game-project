@@ -6,6 +6,7 @@ window.onload = function() {
   var gameStarted = false;
   var lives = 3;
   var score = 0;
+  var speed = 2;
 
   // Declarations
   var positionXpanier = 220;
@@ -22,15 +23,21 @@ window.onload = function() {
   startImage.src = "./images/fruits.jpg";
   startImage.onload = function() {
     ctx.drawImage(startImage, 0, 0);
-    ctx.font = "bold 22px Dosis";
-
+    ctx.font = "bold 25px Dosis";
     ctx.fillText(
-      "Use the left and right arrow to control your basket",
-      78,
+      "Try to catch up the fruits before they hit the ground !",
+      40,
       200
-    );
-   
-}
+    ),
+      //       setTimeout(function){
+      //  canvas.value ="Use the left and right arrow to control your basket" }, 2000;
+      ctx.font = "bold 22px Dosis";
+      ctx.fillText("Use the left and right arrow to control your basket",
+        75,
+        290);
+      (ctx.font = "bold 14px Dosis");
+    ctx.fillText("And find the hidden lemon on the page !", 170, 455);
+  };
 
   // Function Start Game
   function startGame() {
@@ -53,12 +60,16 @@ window.onload = function() {
       gameStarted = true;
     }
   };
-  
-  // Click on the tree
- canvas.addEventListener('click', function() {
-  document.getElementById("game").innerHTML = "Hello World!";
-  }
 
+  // Click on the tree
+  //   var arbre = 298, 218;
+  // //  canvas.addEventListener('click', function(drawTree) {
+  // // for (var i = 0; i < arbre.length; i++)
+
+  var tree = new Image();
+  tree.src = "./images/tree.png";
+  ctx.drawImage(tree, 298, 218, 287, 287);
+  //   }
 
   // Right and left
   document.onkeydown = function(event) {
@@ -92,12 +103,23 @@ window.onload = function() {
 
   var gameOver = false;
 
+  var cloud = new Image();
+  cloud.src = "./images/clouds.png";
+  positionCloud = +10;
+  for (var i = 0; i < 3; i++) {
+  var cloudX = Math.floor (550 * Math.random());
+  ctx.drawImage(cloud, cloudX, 50, 150, 150);
+      //.image, x, y, width, height, speed
+      //positionCloud += 50
+  }
+
+
   // Function Random Obstacles
   function updateCanvas() {
     frame++;
     ctx.clearRect(0, 0, 550, 500);
     for (var i = 0; i < obstacles.length; i++) {
-      obstacles[i].y += 2; // rapidity
+      obstacles[i].y += speed; // rapidity
     }
     if (frame % 120 == 0) {
       var randomIndex = Math.floor(images.length * Math.random());
@@ -112,37 +134,29 @@ window.onload = function() {
     ctx.drawImage(img, positionXpanier, 410, 100, 100);
 
     //Background moving cloud
-    var cloud = new Image();
-    cloud.src = "./images/clouds.png";
-    var backgroundCloud = {
-      cloud: cloud,
-      x: 0,
-      speed: -1,
+  
+    // var backgroundCloud = {
+    //   cloud: cloud,
+    //   x: 0,
+    //   speed: -1,
 
-      move: function() {
-        this.x += this.speed;
-        this.x %= canvas.width;
-      },
+    //   move: function() {
+    //     this.x += this.speed;
+    //     this.x %= canvas.width;
+    //   },
 
-      draw: function() {
-        ctx.drawImage(this.cloud, this.x, 0);
-        if (this.speed < 0) {
-          ctx.drawImage(this.cloud, this.x + canvas.width, 0);
-        } else {
-          ctx.drawImage(this.cloud, this.x - this.cloud.width, 0);
-        }
-      }
-    };
-    backgroundCloud.move();
+    //   draw: function() {
+    //     ctx.drawImage(this.cloud, this.x, 0);
+    //     if (this.speed < 0) {
+    //       ctx.drawImage(this.cloud, this.x + canvas.width, 0);
+    //     } else {
+    //       ctx.drawImage(this.cloud, this.x - this.cloud.width, 0);
+    //     }
+    //   }
+    // };
+    // backgroundCloud.move();
 
-    //positionCloud = +10;
-    // for (var i = 0; i < 3; i++) {
-    // var randomX = Math.floor (550 * Math.random());
-    // ctx.drawImage(cloud, randomX, 50, 150, 150);
-    //     //.image, x, y, width, height, speed
-    //     //positionCloud += 50
-    // }
-
+ 
     //Background grass
     var grass = new Image();
     grass.src = "./images/grass.png";
@@ -171,8 +185,11 @@ window.onload = function() {
         plash = new Sound("./sounds/plash.mp3");
         plash.play();
         score += 1;
+        if (score % 10 == 0) {
+          speed += 2;
+        }
       }
-      if (
+      if (obstacles[i] &&
         intersect(
           { x: obstacles[i].x, y: obstacles[i].y, width: 50, height: 50 },
           { y: 500 }
@@ -183,7 +200,10 @@ window.onload = function() {
         splash = new Sound("./sounds/splash.mp3");
         splash.play();
       }
+      
     }
+
+    // Game Over
     if (lives === 0) {
       gameOver = true;
       var endImage = new Image();
@@ -193,8 +213,7 @@ window.onload = function() {
         scream = new Sound("./sounds/end.mp3");
         scream.play();
         ctx.font = "bold 40px Dosis";
-        ctx.fillText(
-          "GAME OVER",180,250);
+        ctx.fillText("GAME OVER", 180, 250);
       };
     }
 
@@ -218,4 +237,34 @@ window.onload = function() {
 
     if (!gameOver) requestAnimationFrame(updateCanvas);
   }
+  // Get the modal
+  var modal = document.getElementById("myModal");
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("myBtn");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on the button, open the modal
+  btn.onclick = function() {
+    modal.style.display = "block";
+  };
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  };
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 };
+
+// //function restart() {
+//   if (clearInterval(interval)) frames = 0;
+//   score = 0;
+// }
