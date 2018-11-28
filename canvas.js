@@ -18,25 +18,38 @@ window.onload = function() {
   // Sounds
   var mySound;
 
+  // Form name
+//   $(window).load(function () {
+//     $(".popUp").click(function(){
+//        $('.popUp').show();
+//     });
+//     $('.popUp').click(function(){
+//         $('.popUp').hide();
+//     });
+//     $('.popupCloseButton').click(function(){
+//         $('.popUp').hide();
+//     });
+// });
+
   // First image, before starting
   var startImage = new Image();
-  startImage.src = "./images/fruits.jpg";
+  startImage.src = "./images/start.png";
   startImage.onload = function() {
     ctx.drawImage(startImage, 0, 0);
     ctx.font = "bold 25px Dosis";
     ctx.fillText(
       "Try to catch up the fruits before they hit the ground !",
-      40,
+      32,
       200
     ),
       //       setTimeout(function){
       //  canvas.value ="Use the left and right arrow to control your basket" }, 2000;
       ctx.font = "bold 22px Dosis";
       ctx.fillText("Use the left and right arrow to control your basket",
-        75,
+        71,
         290);
       (ctx.font = "bold 14px Dosis");
-    ctx.fillText("And find the hidden lemon on the page !", 170, 455);
+    ctx.fillText("And find the hidden lemon on the page !", 170, 442);
   };
 
   // Function Start Game
@@ -53,6 +66,7 @@ window.onload = function() {
     updateCanvas();
   }
 
+
   // Start Button
   document.getElementById("button").onclick = function() {
     if (!gameStarted) {
@@ -66,10 +80,6 @@ window.onload = function() {
   // //  canvas.addEventListener('click', function(drawTree) {
   // // for (var i = 0; i < arbre.length; i++)
 
-  var tree = new Image();
-  tree.src = "./images/tree.png";
-  ctx.drawImage(tree, 298, 218, 287, 287);
-  //   }
 
   // Right and left
   document.onkeydown = function(event) {
@@ -103,17 +113,6 @@ window.onload = function() {
 
   var gameOver = false;
 
-  var cloud = new Image();
-  cloud.src = "./images/clouds.png";
-  positionCloud = +10;
-  for (var i = 0; i < 3; i++) {
-  var cloudX = Math.floor (550 * Math.random());
-  ctx.drawImage(cloud, cloudX, 50, 150, 150);
-      //.image, x, y, width, height, speed
-      //positionCloud += 50
-  }
-
-
   // Function Random Obstacles
   function updateCanvas() {
     frame++;
@@ -128,35 +127,15 @@ window.onload = function() {
         new Obstacle(images[randomIndex], randomX, -50, 30, 50, 50)
       );
     }
+
+    // Moving cloud
+    var movingClouds = 3;
+    for (let i = 0; i < movingClouds; i++) {
+    movingClouds.x += 2;
+    }
+
     drawLives();
 
-    // Draw the basket
-    ctx.drawImage(img, positionXpanier, 410, 100, 100);
-
-    //Background moving cloud
-  
-    // var backgroundCloud = {
-    //   cloud: cloud,
-    //   x: 0,
-    //   speed: -1,
-
-    //   move: function() {
-    //     this.x += this.speed;
-    //     this.x %= canvas.width;
-    //   },
-
-    //   draw: function() {
-    //     ctx.drawImage(this.cloud, this.x, 0);
-    //     if (this.speed < 0) {
-    //       ctx.drawImage(this.cloud, this.x + canvas.width, 0);
-    //     } else {
-    //       ctx.drawImage(this.cloud, this.x - this.cloud.width, 0);
-    //     }
-    //   }
-    // };
-    // backgroundCloud.move();
-
- 
     //Background grass
     var grass = new Image();
     grass.src = "./images/grass.png";
@@ -166,6 +145,14 @@ window.onload = function() {
     var tree = new Image();
     tree.src = "./images/tree.png";
     ctx.drawImage(tree, 298, 218, 287, 287);
+
+  // Draw the basket
+   ctx.drawImage(img, positionXpanier, 410, 100, 100);
+
+   // Background cloud
+    var cloud = new Image();
+    cloud.src = "./images/clouds.png";
+    ctx.drawImage(cloud, 180, 50, 150, 150);
 
     // Design - score
     ctx.font = " bold 18px Dosis";
@@ -215,6 +202,7 @@ window.onload = function() {
         ctx.font = "bold 40px Dosis";
         ctx.fillText("GAME OVER", 180, 250);
       };
+      $('popUp').show();
     }
 
     // Intersect basket-obstacles
@@ -262,6 +250,9 @@ window.onload = function() {
       modal.style.display = "none";
     }
   };
+
+
+
 };
 
 // //function restart() {
