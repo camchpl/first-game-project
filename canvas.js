@@ -3,33 +3,27 @@ window.onload = function() {
   var canvas = document.getElementById("game-board");
   var myAudio = document.createElement("audio");
   var ctx = canvas.getContext("2d");
-  var gameStarted = false;
-  var lives = 3;
-  var score = 0;
-  var speed = 2;
 
   // Declarations
-  var positionXpanier = 220;
-  var img = new Image();
+  var gameOver, lives, score, speed, frame, positionXpanier, reqUpdateCanvas;
   var obstacles = [];
+  var img = new Image();
   var images = ["images/banana.png", "images/orange.png", "images/fruit1.png"];
-  var frame = 0;
-
   // Sounds
   var mySound;
 
   // Form name
-//   $(window).load(function () {
-//     $(".popUp").click(function(){
-//        $('.popUp').show();
-//     });
-//     $('.popUp').click(function(){
-//         $('.popUp').hide();
-//     });
-//     $('.popupCloseButton').click(function(){
-//         $('.popUp').hide();
-//     });
-// });
+  //   $(window).load(function () {
+  //     $(".popUp").click(function(){
+  //        $('.popUp').show();
+  //     });
+  //     $('.popUp').click(function(){
+  //         $('.popUp').hide();
+  //     });
+  //     $('.popupCloseButton').click(function(){
+  //         $('.popUp').hide();
+  //     });
+  // });
 
   // First image, before starting
   var startImage = new Image();
@@ -45,15 +39,27 @@ window.onload = function() {
       //       setTimeout(function){
       //  canvas.value ="Use the left and right arrow to control your basket" }, 2000;
       ctx.font = "bold 22px Dosis";
-      ctx.fillText("Use the left and right arrow to control your basket",
-        71,
-        290);
-      (ctx.font = "bold 14px Dosis");
+    ctx.fillText("Use the left and right arrow to control your basket",
+      71,
+      290);
+    (ctx.font = "bold 14px Dosis");
     ctx.fillText("And find the hidden lemon on the page !", 170, 442);
   };
 
-  // Function Start Game
+  // Function Start/Restart Game
   function startGame() {
+    //Set initial gameplay values
+    gameOver = false;
+    lives = 3;
+    score = 0;
+    speed = 2;
+    frame = 0;
+    positionXpanier = 220;
+    obstacles.length = 0;
+
+    //Clear the previous animation frame for the next game to prevent stacks
+    cancelAnimationFrame(reqUpdateCanvas);
+
     mySound = new Sound("./sounds/bong.mp3");
     img.src = "./images/panier.png";
     img.onload = function() {
@@ -64,15 +70,14 @@ window.onload = function() {
       hearts.push(heart);
     }
     updateCanvas();
-  }
 
+    //Change button text to Restart after starting the game
+    document.getElementById("button-text").innerHTML = 'Restart';
+  }
 
   // Start Button
   document.getElementById("button").onclick = function() {
-    if (!gameStarted) {
-      startGame();
-      gameStarted = true;
-    }
+    startGame();
   };
 
   // Click on the tree
@@ -111,8 +116,6 @@ window.onload = function() {
     }
   }
 
-  var gameOver = false;
-
   // Function Random Obstacles
   function updateCanvas() {
     frame++;
@@ -131,7 +134,7 @@ window.onload = function() {
     // Moving cloud
     var movingClouds = 3;
     for (let i = 0; i < movingClouds; i++) {
-    movingClouds.x += 2;
+      movingClouds.x += 2;
     }
 
     drawLives();
@@ -146,10 +149,10 @@ window.onload = function() {
     tree.src = "./images/tree.png";
     ctx.drawImage(tree, 298, 218, 287, 287);
 
-  // Draw the basket
-   ctx.drawImage(img, positionXpanier, 410, 100, 100);
+    // Draw the basket
+    ctx.drawImage(img, positionXpanier, 410, 100, 100);
 
-   // Background cloud
+    // Background cloud
     var cloud = new Image();
     cloud.src = "./images/clouds.png";
     ctx.drawImage(cloud, 180, 50, 150, 150);
@@ -187,7 +190,7 @@ window.onload = function() {
         splash = new Sound("./sounds/splash.mp3");
         splash.play();
       }
-      
+
     }
 
     // Game Over
@@ -223,7 +226,8 @@ window.onload = function() {
       );
     }
 
-    if (!gameOver) requestAnimationFrame(updateCanvas);
+    if (!gameOver)
+      reqUpdateCanvas = requestAnimationFrame(updateCanvas);
   }
   // Get the modal
   var modal = document.getElementById("myModal");

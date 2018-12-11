@@ -1,58 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <script type="text/javascript" src="./canvas.js"></script>
-    <script type="text/javascript" src="./obstacles.js"></script>
-    <script type="text/javascript" src="./sounds.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./style.css" />
-    <link
-      rel="icon"
-      href="./images/knife.png"
-      type="image/icon"
-      sizes="16x16"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Dosis:500"
-      rel="stylesheet"
-    />
-    <title>Fruits rain !</title>
-  </head>
-  <body>
-    <!-- Trigger/Open The Modal -->
-    <button id="myBtn"><input type="image" src="./images/lemon1.png" /></button>
-    <div id="myModal" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close"></span>
-        <p>
-          Did you know that warm water mixed with honey and lemon juice is one
-          of the most recommended home remedies for flu
-        </p>
-      </div>
-    </div>
 
-    <div id="game">
-      <canvas id="game-board" height="500" width="550"></canvas>
-    </div>
-    <div class="sub-main">
-      <button id="button"><span>Start</span></button>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <script type="text/javascript" src="./canvas.js"></script>
+  <script type="text/javascript" src="./obstacles.js"></script>
+  <script type="text/javascript" src="./sounds.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="icon" href="./images/knife.png" type="image/icon" sizes="16x16" />
+  <link href="https://fonts.googleapis.com/css?family=Dosis:500" rel="stylesheet" />
+  <title>Fruits rain !</title>
+</head>
 
-    <!-- Form name -->
-    <div class="popUp">
-        <span class="helper"></span>
-        <div>
-            <div class="popupCloseButton">X</div>
-            <p></p>
-        </div>
+<body>
+  <!-- Trigger/Open The Modal -->
+  <button id="myBtn"><input type="image" src="./images/lemon1.png" /></button>
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close"></span>
+      <p>
+        Did you know that warm water mixed with honey and lemon juice is one
+        of the most recommended home remedies for flu
+      </p>
     </div>
-    <audio id="start" src="./sounds/bong.mp3"></audio>
-    <audio id="end" src="./sounds/end.mp3"></audio>
-    <h3>Made with ♥ by <a href="https://github.com/camchpl"> Camille</a></h3>
-  </body>
+  </div>
+
+  <div id="game">
+    <canvas id="game-board" height="500" width="550"></canvas>
+  </div>
+  <div class="sub-main">
+    <button id="button"><span id="button-text">Start</span></button>
+  </div>
+
+  <!-- Form name -->
+  <div class="popUp">
+    <span class="helper"></span>
+    <div>
+      <div class="popupCloseButton">X</div>
+      <p></p>
+    </div>
+  </div>
+  <audio id="start" src="./sounds/bong.mp3"></audio>
+  <audio id="end" src="./sounds/end.mp3"></audio>
+  <h3>Made with ♥ by <a href="https://github.com/camchpl"> Camille</a></h3>
+</body>
+
 </html>
