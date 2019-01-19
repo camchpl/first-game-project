@@ -19,8 +19,6 @@ HTML/CSS/Javascript with Canvas.
 Moving cloud.
 I also wanted to be able to click on the tree and make a bird appears, but I didn't have lots of time to focus on that.
 
-I will try that later though.
-
 
 
 
